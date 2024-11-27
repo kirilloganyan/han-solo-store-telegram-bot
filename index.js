@@ -44,7 +44,7 @@ const start = () => {
         }
             if(userState[chatId] === 'waiting_for_sum'){
             if(!isNaN(Number(text)))
-            return bot.sendMessage(chatId, `Итоговая стоимость товара с учетом комиссии и доставки составила ≈ ${Math.floor(Number(text) * currency.value + deliveryTax)}руб.\nИнформация по заказу:\nКомиссия нашего сервиса: ${500} руб. \n Цена доставки сервиса: ${Math.floor(deliveryTax)} (уже включена в итоговую стоимость)\nАктуальный курс юаня: ${currency.value.toFixed(2)}\nКатегория товара: ${category}`);
+            return bot.sendMessage(chatId, `Итоговая стоимость товара с учетом комиссии и доставки составила ≈ ${Math.floor(Number(text) * currency.value + deliveryTax)}руб.\nИнформация по заказу:\nКомиссия нашего сервиса: ${500} руб. \nЦена доставки сервиса: ${Math.floor(deliveryTax)} (уже включена в итоговую стоимость)\nАктуальный курс юаня: ${currency.value.toFixed(2)}\nКатегория товара: ${category}`);
             else {
                 userState[chatId] = 'waiting_for_sum';
                 return bot.sendMessage(chatId,'Постарайся ввести число')
