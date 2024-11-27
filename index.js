@@ -16,8 +16,11 @@ const categoryOptions = {
         ]
     })
 }
+
 const userState = {};
 let deliveryTax = 0;
+let category = '';
+
 const start = () => {
     bot.setMyCommands([
         {command: '/start', description: 'Рассчитать стоимость'},
@@ -41,7 +44,7 @@ const start = () => {
         }
             if(userState[chatId] === 'waiting_for_sum'){
             if(!isNaN(Number(text)))
-            return bot.sendMessage(chatId, `Примерная стоимость товара ≈<b>${Math.floor(Number(text) * currency.value + deliveryTax)}</b>`, { parse_mode: 'HTML' });
+            return bot.sendMessage(chatId, `Итоговая стоимость товара с учетом комиссии и доставки составила ≈ ${Math.floor(Number(text) * currency.value + deliveryTax)}руб.\nИнформация по заказу:\nКомиссия нашего сервиса: ${500} руб. \n Цена доставки сервиса: ${Math.floor(deliveryTax)} (уже включена в итоговую стоимость)\nАктуальный курс юаня: ${currency.value.toFixed(2)}\nКатегория товара: ${category}`);
             else {
                 userState[chatId] = 'waiting_for_sum';
                 return bot.sendMessage(chatId,'Постарайся ввести число')
@@ -60,18 +63,22 @@ const start = () => {
                     case 'sneakers':
                         userState[chatId] = 'waiting_for_sum';
                         deliveryTax=1500;
+                        category = 'Кроссовки';
                         return bot.sendMessage(chatId, 'Укажите цену товара в <b>ЮАНЯХ</b> 🇨🇳', {parse_mode: 'HTML'});
                     case 'sweatshirt':
                         userState[chatId] = 'waiting_for_sum';
                         deliveryTax=900;
+                        category = 'Свитшот';
                         return bot.sendMessage(chatId, 'Укажите цену товара в <b>ЮАНЯХ</b> 🇨🇳', {parse_mode: 'HTML'});
                     case 'longSleeve':
                         userState[chatId] = 'waiting_for_sum';
                         deliveryTax=700;
+                        category = 'Лонгслив';
                         return bot.sendMessage(chatId, 'Укажите цену товара в <b>ЮАНЯХ</b> 🇨🇳', {parse_mode: 'HTML'});
                     case 't-shirt':
                         userState[chatId] = 'waiting_for_sum';
                         deliveryTax=500;
+                        category = 'Футболка';
                         return bot.sendMessage(chatId, 'Укажите цену товара в <b>ЮАНЯХ</b> 🇨🇳', {parse_mode: 'HTML'});
                     default:
                         return bot.sendMessage(chatId, 'Неизвестная категория. Попробуйте ещё раз.');
